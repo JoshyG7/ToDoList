@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+<body>
+    <div class="textBox">
+        <input type="text" placeholder="Task to be done..." class="inputValue">
+        <button class="add">Add</button>
+    </div>
+
+    <div class="list"></div>
+    
+    <style>
+        body{
+            background-color: rgb(155, 83, 222);
+            font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif, 'Times New Roman', Times, serif;
+        }
+        .textBox{
+            background-color: white;
+            margin-top: 100px;
+            margin-left: 400px;
+            display: inline-block;
+            padding-left: 20px;
+            padding-right: 20px;
+            border-radius: 20px;
+            padding-top: 30px;
+            padding-bottom: 30px;
+        }
+        .textBox input{
+            border: solid 1px rgb(80, 75, 75);
+            width: 280px;
+            height: 30px;
+            border-radius: 20px;
+            padding-left: 10px;
+            font-weight: bolder;
+        }
+        .textBox button{
+            border: solid 1px rgb(80, 75, 75);
+            width: 70px;
+            height: 30px;
+            border-radius: 20px;
+            padding-left: 10px;
+            font-weight: bolder;
+            background-color: rgb(91, 91, 181);
+            color: white;
+        }
+        .list{
+            background-color: white;
+            margin-top: 30px;
+            margin-left: 400px;
+            width: 405px;
+            padding-bottom: 20px;
+            border-radius: 20px;
+            padding-left: 10px;
+            padding-right: 10px;
+            position: relative;
+            padding-top: 20px;
+        }
+        .newValue{
+            display: inline-block;
+            width: 300px;
+            margin-top: 10px;
+            color: black;
+            font-weight: bolder;
+            margin-bottom: -120px;
+        }
+        .done,.delete{
+            color: white;
+            background-color: rgb(91, 91, 181);
+            border: solid 1px rgb(91, 91, 181);
+            border-radius: 8px;
+            height: 30px;
+            width: 44px;
+            font-size: 17px;
+            position: relative;
+            float: right;
+            margin-top: -7px;
+            right: -102px;
+        }
+        .done:hover,.delete:hover,.textBox button:hover{
+            background-color: white;
+            color: black;
+            cursor: pointer;
+        }
+        .done{
+            margin-right: 15px;
+        }
+        .completed{
+            text-decoration: line-through;
+        }
+    </style>
+
+    <script>
+        let add = document.querySelector(".add");
+        let inputValue = document.querySelector(".inputValue");
+        let list = document.querySelector(".list");
+
+        add.addEventListener("click", () => {
+            if (inputValue.value.length == 0) {
+                alert("Please Enter a task");
+            } else {
+                let newTask = document.createElement("div");
+                newTask.classList.add("newValue");
+                newTask.innerHTML = `${inputValue.value}
+                    <button class="delete"><i class="fa-solid fa-trash"></i></button>
+                    <button class="done"><i class="fa-solid fa-check"></i></button>`;
+                
+                list.appendChild(newTask);
+                list.appendChild(document.createElement("hr"));
+                
+                newTask.querySelector(".delete").addEventListener("click", () => {
+                    newTask.nextElementSibling.remove(); // Remove the hr element
+                    newTask.remove();
+                });
+
+                newTask.querySelector(".done").addEventListener("click", () => {
+                    newTask.classList.toggle("completed");
+                });
+
+                inputValue.value = ""; // Clear the input field
+            }
+        });
+
+        document.querySelectorAll(".delete").forEach(button => {
+            button.addEventListener("click", () => {
+                button.parentElement.nextElementSibling.remove(); // Remove the hr element
+                button.parentElement.remove();
+            });
+        });
+
+        document.querySelectorAll(".done").forEach(button => {
+            button.addEventListener("click", () => {
+                button.parentElement.classList.toggle("completed");
+            });
+        });
+    </script>
+</body>
+</html>
